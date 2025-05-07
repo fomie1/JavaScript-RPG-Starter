@@ -198,7 +198,12 @@ function goFight() {
 function attack() {
     text.innerText = "The " + monsters[fighting].name + " attacks."
     text.innerText += " You attack it with your " + weapons[currentWeapon].name + ".";
-    health -= monsters[fighting].level;
+    if (isMonsterHit()) {
+        health -= getMonsterAttackValue(monsters[fighting].level);
+    } else {
+        text.innerText += " You miss";
+    }
+    
     monsterHealth -= weapons[currentWeapon].power + Math.floor(Math.random() * xp) +1;
     healthText.innerText = health;
     monsterHealthText.innerText = monsterHealth;
@@ -207,6 +212,16 @@ function attack() {
     } else if (monsterHealth <= 0) {
         fighting === 2 ? winGame() : defeatMonster();
     }
+}
+
+function getMonsterAttackValue(level) {
+    let hit = ( level * 5) = (Math.floor(Math.random() * xp));
+    console.log(hit);
+    return hit;
+}
+
+function isMonsterHit() {
+    return Math.random() > .2 || health < 20;
 }
 
 function dodge() {
